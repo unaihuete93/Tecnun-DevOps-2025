@@ -261,7 +261,7 @@ The sprint backlog should contain all the information the team needs to successf
 
     ![Sprint Tasks styles](images/m1/EShop-WEB-sprint-green_v1.png)
 
-**TAKE SCREENSHOT TO REFLECT ACTITIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
+**TAKE SCREENSHOT TO REFLECT ACTIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
 
 ![first screenshot](images/screenshot1.png)
 
@@ -353,7 +353,7 @@ To maximize a team's ability to consistently deliver high quality software, Kanb
 
 30. Back on the **Board** tab of the **Boards** panel, drag and drop the **Committed** work item onto the **QA Approved \| Doing** stage of the **Expedite** swimlane so that it gets recognized as having priority when QA bandwidth becomes available.
 
-**TAKE SCREENSHOT TO REFLECT ACTITIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
+**TAKE SCREENSHOT TO REFLECT ACTIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
 
 ![](images/screenshot2.png)
 
@@ -413,7 +413,7 @@ Dashboards allow teams to visualize status and monitor progress across the proje
 24. Notice the query results pie chart is shown on the dashboard. **Save** the changes by pressing the **Done Editing** button on top.
 
 
-**TAKE SCREENSHOT TO REFLECT ACTITIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
+**TAKE SCREENSHOT TO REFLECT ACTIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
 
 ![](images/screenshot3.png)
 
