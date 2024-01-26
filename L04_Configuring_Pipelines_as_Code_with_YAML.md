@@ -1,22 +1,7 @@
----
-lab:
-    title: 'Configuring Pipelines as Code with YAML'
-    module: 'Module 05: Implement a secure continuous deployment using Azure Pipelines'
----
 
 # Configuring Pipelines as Code with YAML
 
 ## Student lab manual
-
-## Lab requirements
-
-- This lab requires **Microsoft Edge** or an [Azure DevOps supported browser.](https://docs.microsoft.com/azure/devops/server/compatibility)
-
-- **Set up an Azure DevOps organization:** If you don't already have an Azure DevOps organization that you can use for this lab, create one by following the instructions available at [Create an organization or project collection](https://docs.microsoft.com/azure/devops/organizations/accounts/create-organization).
-
-- Identify an existing Azure subscription or create a new one.
-
-- Verify that you have a Microsoft account or a Microsoft Entra account with the Owner role in the Azure subscription and the Global Administrator role in the Microsoft Entra tenant associated with the Azure subscription. For details, refer to [List Azure role assignments using the Azure portal](https://docs.microsoft.com/azure/role-based-access-control/role-assignments-list-portal) and [View and assign administrator roles in Azure Active Directory](https://docs.microsoft.com/azure/active-directory/roles/manage-roles-portal).
 
 ## Lab overview
 
@@ -32,77 +17,6 @@ After you complete this lab, you will be able to:
 
 ## Instructions
 
-### Exercise 0: Configure the lab prerequisites
-
-In this exercise, you will set up the prerequisites for the lab, which consist of a new Azure DevOps project with a repository based on the [eShopOnWeb](https://github.com/MicrosoftLearning/eShopOnWeb).
-
-#### Task 1:  (skip if done) Create and configure the team project
-
-In this task, you will create an **eShopOnWeb_MultiStageYAML** Azure DevOps project to be used by several labs.
-
-1. On your lab computer, in a browser window open your Azure DevOps organization. Click on **New Project**. Give your project the name **eShopOnWeb_MultiStageYAML** and leave the other fields with defaults. Click on **Create**.
-
-    ![Create Project](images/create-project.png)
-
-#### Task 2:  (skip if done) Import eShopOnWeb Git Repository
-
-In this task you will import the eShopOnWeb Git repository that will be used by several labs.
-
-1. On your lab computer, in a browser window open your Azure DevOps organization and the previously created **eShopOnWeb_MultiStageYAML** project. Click on **Repos>Files** , **Import a Repository**. Select **Import**. On the **Import a Git Repository** window, paste the following URL https://github.com/MicrosoftLearning/eShopOnWeb.git  and click **Import**:
-
-    ![Import Repository](images/import-repo.png)
-
-2. The repository is organized the following way:
-    - **.ado** folder contains Azure DevOps YAML pipelines.
-    - **.devcontainer** folder container setup to develop using containers (either locally in VS Code or GitHub Codespaces).
-    - **.azure** folder contains Bicep&ARM infrastructure as code templates used in some lab scenarios.
-    - **.github** folder container YAML GitHub workflow definitions.
-    - **src** folder contains the .NET 7 website used on the lab scenarios.
-
-#### Task 2: Create Azure resources
-
-In this task, you will create an Azure web app by using the Azure portal.
-
-1. From the lab computer, start a web browser, navigate to the [**Azure Portal**](https://portal.azure.com), and sign in with the user account that has the Owner role in the Azure subscription you will be using in this lab and has the role of the Global Administrator in the Microsoft Entra tenant associated with this subscription.
-2. In the Azure portal, in the toolbar, click the **Cloud Shell** icon located directly to the right of the search text box.
-3. If prompted to select either **Bash** or **PowerShell**, select **Bash**.
-
-    >**Note**: If this is the first time you are starting **Cloud Shell** and you are presented with the **You have no storage mounted** message, select the subscription you are using in this lab, and select **Create storage**.
-
-    > **Note:** for a list of regions and their alias, run the following command from the Azure Cloud Shell - Bash:
-
-    ```bash
-    az account list-locations -o table
-    ```
-
-4. From the **Bash** prompt, in the **Cloud Shell** pane, run the following command to create a resource group (replace the `<region>` placeholder with the name of the Azure region closest to you such as 'centralus', 'westeurope' or other region of choice).
-
-    ```bash
-    LOCATION='<region>'
-    ```
-
-    ```bash
-    RESOURCEGROUPNAME='az400m05l11-RG'
-    az group create --name $RESOURCEGROUPNAME --location $LOCATION
-    ```
-
-5. To create a Windows App service plan by running the following command:
-
-    ```bash
-    SERVICEPLANNAME='az400m05l11-sp1'
-    az appservice plan create --resource-group $RESOURCEGROUPNAME --name $SERVICEPLANNAME --sku B3
-    ```
-
-6. Create a web app with a unique name.
-
-    ```bash
-    WEBAPPNAME=eshoponWebYAML$RANDOM$RANDOM
-    az webapp create --resource-group $RESOURCEGROUPNAME --plan $SERVICEPLANNAME --name $WEBAPPNAME
-    ```
-
-    > **Note**: Record the name of the web app. You will need it later in this lab.
-
-7. Close the Azure Cloud Shell, but leave the Azure Portal open in the browser.
 
 ### Exercise 1: Configure CI/CD Pipelines as Code with YAML in Azure DevOps
 
@@ -112,28 +26,40 @@ In this exercise, you will configure CI/CD Pipelines as code with YAML in Azure 
 
 In this task, you will add a YAML build definition to the existing project.
 
-1. Navigate back to the **Pipelines** pane in of the **Pipelines** hub.
-2. In the **Create your first Pipeline** window, click **Create pipeline**.
+1. Make sure you completed previous lab.
+2. Make sure the last pipeline created in the lab is named **eshoponweb-ci**.
 
-    > **Note**: We will use the wizard to create a new YAML Pipeline definition based on our project.
+Lab03 created a continuous integration (CI) that build/tested and created the binaries we need to deploy our solution, which is composed of an Azure Webapp and our eShopOnWeb website executing inside of it. 
 
-3. On the **Where is your code?** pane, click **Azure Repos Git (YAML)** option.
-4. On the **Select a repository** pane, click **eShopOnWeb_MultiStageYAML**.
-5. On the **Configure your pipeline** pane, scroll down and select **Existing Azure Pipelines YAML File**.
-6. In the **Selecting an existing YAML File** blade, specify the following parameters:
-   - Branch: **main**
-   - Path: **.ado/eshoponweb-ci.yml**
-7. Click **Continue** to save these settings.
-8. From the **Review your Pipeline YAML** screen, click **Run** to start the Build Pipeline process.
-9. Wait for the Build Pipeline to complete successfully. Ignore any warnings regarding the source code itself, as they are not relevant for this lab exercise.
+#### Task 2: Add continuous delivery (CD)
 
-    > **Note**: Each task from the YAML file is available for review, including any warnings and errors.
+In this task, you will add continuous delivery  pipeline, which:
 
-#### Task 2: Add continuous delivery to the YAML definition
+- Deployes an Azure App Service Plan and WebApp using Bicep IaC.
+- Publishes a website on top of this service. 
 
-In this task, you will add continuous delivery to the YAML-based definition of the pipeline you created in the previous task.
+1. Go to **Pipelines>Pipelines**.
+2. Click on **New Pipeline** button.
+3. Select **Azure Repos Git (YAML)**.
+4. Select the **eShopOnWeb** repository.
+5. Select **Existing Azure Pipelines YAML File**.
+6. Select the **/.ado/eshoponweb-cd-webapp-code.yml** file then click on **Continue**.
 
-> **Note**: Now that the build and test processes are successful, we can now add delivery to the YAML definition.
+    The CD definition is triggered everytime we finish a succesful CI pipeline and it consists of the following tasks:
+    - **Download** the files created during the CI process (Bicep and Website)
+    - **Bicep Deploy** task to deploy the infrastructure template
+    - **WebApp Deploy** publishes the website code on top of webapp.
+
+1. Click on **Save**. Rename the pipeline to **eshoponweb-cd**. 
+
+1. Click on **Edit**. You need tpo change the following:
+
+    1. In Variables:
+        - Resource group - replace NAME
+        - subscriptionid - replace to d2e3bef4-3e21-4c1f-873d-398932f57163
+        - webappname - replace NAME
+
+TODO
 
 1. On the pipeline run pane, click the ellipsis symbol in the upper right corner and, in the dropdown menu, click **Edit pipeline**.
 2. On the pane displaying the content of the **eShopOnWeb_MultiStageYAML/.ado/eshoponweb-ci.yml** file, navigate to the end of the file (line 56), and hit **Enter/Return** to add a new empty line.
