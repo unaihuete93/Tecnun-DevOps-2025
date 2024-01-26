@@ -1,18 +1,7 @@
----
-lab:
-    title: 'Enabling Continuous Integration with Azure Pipelines'
-    module: 'Module 03: Implement CI with Azure Pipelines and GitHub Actions'
----
 
-# Enabling Continuous Integration with Azure Pipelines
+# LAB 03 Enabling Continuous Integration with Azure Pipelines
 
 ## Student lab manual
-
-## Lab requirements
-
-- This lab requires **Microsoft Edge** or an [Azure DevOps supported browser.](https://docs.microsoft.com/azure/devops/server/compatibility)
-
-- **Set up an Azure DevOps organization:** If you don't already have an Azure DevOps organization that you can use for this lab, create one by following the instructions available at [Create an organization or project collection](https://docs.microsoft.com/azure/devops/organizations/accounts/create-organization).
 
 ## Lab overview
 
@@ -33,28 +22,7 @@ After you complete this lab, you will be able to:
 
 ## Instructions
 
-### Exercise 0: Configure the lab prerequisites
 
-In this exercise, you will set up the prerequisites for the lab, which consist of a new Azure DevOps project with a repository based on the [eShopOnWeb](https://github.com/MicrosoftLearning/eShopOnWeb).
-
-#### Task 1:  (skip if done) Create and configure the team project
-
-In this task, you will create an **eShopOnWeb** Azure DevOps project to be used by several labs.
-
-1. On your lab computer, in a browser window open your Azure DevOps organization. Click on **New Project**. Give your project the name **eShopOnWeb** and leave the other fields with defaults. Click on **Create**.
-
-#### Task 2:  (skip if done) Import eShopOnWeb Git Repository
-
-In this task you will import the eShopOnWeb Git repository that will be used by several labs.
-
-1. On your lab computer, in a browser window open your Azure DevOps organization and the previously created **eShopOnWeb** project. Click on **Repos>Files** , **Import a Repository**. Select **Import**. On the **Import a Git Repository** window, paste the following URL https://github.com/MicrosoftLearning/eShopOnWeb.git and click **Import**:
-
-2. The repository is organized the following way:
-    - **.ado** folder contains Azure DevOps YAML pipelines.
-    - **.devcontainer** folder container setup to develop using containers (either locally in VS Code or GitHub Codespaces).
-    - **.azure** folder contains Bicep & ARM infrastructure as code templates used in some lab scenarios.
-    - **.github** folder contains YAML GitHub workflow definitions.
-    - **src** folder contains the .NET website used in the lab scenarios.
 
 ### Exercise 1: Include build validation as part of a Pull Request
 
@@ -98,7 +66,7 @@ In this task, you will use the Azure DevOps portal to create a Pull Request, usi
 
 1. Navigate to the **Repos** section in the eShopOnWeb navigation and click **Branches**.
 2. Create a new branch named **Feature01** based on the **main** branch.
-3. Click **Feature01** and navigate to the **/eShopOnWeb/src/Web/Program.cs** file as part of the **Feature01** branch
+3. Click **Feature** and navigate to the **/eShopOnWeb/src/Web/Program.cs** file as part of the **Feature01** branch
 4. Click the **Edit** button in the top-right
 5. Make the following change on the first line:
 
@@ -107,14 +75,22 @@ In this task, you will use the Azure DevOps portal to create a Pull Request, usi
     ```
 
 6. Click on **Commit > Commit** (leave default commit message).
-7. A message will pop-up, proposing to create a Pull Request (as your **Feature01** branch is now ahead in changes, compared to **main**). Click on **Create a Pull Request**.
+7. A message will pop-up, proposing to create a Pull Request (as your **Feature** branch is now ahead in changes, compared to **main**). Click on **Create a Pull Request**.
 8. In the **New pull request** tab, leave defaults and click on **Create**.
 9. The Pull Request will show some pending requirements, based on the policies applied to the target **main** branch.
     - At least 1 user should review and approve the changes.
     - Build validation, you will see that the build **eshoponweb-ci-pr** was triggered automatically
 
-10. After all validations are successful, on the top-right click on **Approve**. Now from the **Set auto-complete** dropdown you can click on **Complete**.
+10. Wait for the pipeline to execute succesfully. You want to make sure your code succesfully build/tests before merging changes.
+
+10. After all validations are successful, on the top-right click on **Approve**. Now  you can click on **Complete**.
 11. On the **Complete Pull Request** tab, click on **Complete Merge**
+
+**TAKE SCREENSHOT TO REFLECT ACTIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
+
+![](images/lab3-1.png)
+
+**IMPORTANT** Delete the **feature** branch and delete the branch policies to simplify following activities. 
 
 ### Exercise 2: Configure CI Pipeline as Code with YAML
 
@@ -141,6 +117,8 @@ Let's start by importing the CI pipeline named [eshoponweb-ci.yml](https://githu
     - **Publish Artifact - Website**: Publish the app artifact (created in the previous step) and make it available as a pipeline artifact.
     - **Publish Artifact - Bicep**: Publish the infrastructure artifact (Bicep file) and make it available as a pipeline artifact.
 
+1. Click on **Save**. Rename it to **eshoponweb-ci**.
+
 #### Task 2: Enable Continuous Integration
 
 The default build pipeline definition doesn't enable Continuous Integration.
@@ -161,44 +139,31 @@ The default build pipeline definition doesn't enable Continuous Integration.
 
     This will automatically trigger the build pipeline if any change is made to the main branch and the web application code (the src/web folder).
 
-    Since you enabled Branch Policies, you need to pass by a Pull Request in order to update your code.
 
 3. Click the **Save** button (not **Save and run**) to save the pipeline definition.
-4. Select **Create a new branch for this commit**
-5. Keep the default branch name and **Start a pull request** checked.
-6. Click on **Save**
-7. Your pipeline will take a name based on the project name. Let's **rename** it for identifying the pipeline better. Go to **Pipelines>Pipelines** and click on the recently created pipeline. Click on the ellipsis and **Rename/Move** option. Name it **eshoponweb-ci** and click on **Save**.
-8. Go to **Repos > Pull Requests**
-9. Click on the **"Update eshoponweb-ci.yml for Azure Pipelines"** pull request 
-10. After all validations are successful, on the top-right click on **Approve**. Now you can click on **Complete**.
-11. On the **Complete Pull Request** tab, Click on **Complete Merge**
 
 #### Task 3: Test the CI pipeline
 
 In this task, you will create a Pull Request, using a new branch to merge a change into the protected **main** branch and automatically trigger the CI pipeline.
 
-1. Navigate to the **Repos** section
-2. Create a new branch named **Feature02** based on the **main** branch
-3. Click the new **Feature02** branch
-4. Navigate to the **/eShopOnWeb/src/Web/Program.cs** file and click **Edit** in the top-right
+1. Navigate to the **Repos>Files** section.
+4. On the **main** branch, navigate to the **/eShopOnWeb/src/Web/Program.cs** file and click **Edit** in the top-right
 5. Remove the first line:
 
     ```csharp
     // Testing my PR
     ```
 
-6. Click on **Commit > Commit** (leave default commit message).
-7. A message will pop-up, proposing to create a Pull Request (as your **Feature02** branch is now ahead in changes, compared to **main**).
-8. Click on **Create a Pull Request**.
-9. In the **New pull request** tab, leave defaults and click on **Create**.
-10. The Pull Request will show some pending requirements, based on the policies applied to the target **main** branch.
-11. After all validations are successful, on the top-right click on **Approve**. Now from the **Set auto-complete** dropdown you can click on **Complete**.
-12. On the **Complete Pull Request** tab, Click on **Complete Merge**
 13. Go back to **Pipelines>Pipelines**, you will notice that the build **eshoponweb-ci** was triggered automatically after the code was merged.
 14. Click on the **eshoponweb-ci** build then select the last run.
-15. After its successful execution, click on **Related > Published** to check the published artifacts:
-    - Bicep: the infrastructure artifact.
-    - Website: the app artifact.
+15. Wait until the pipeline runs succesfully, review all results given:
+- Sucessful building/testing
+- Related work items
+- Generated artifacts
+
+**TAKE SCREENSHOT TO REFLECT ACTIVITY COMPLETION, SIMILAR TO THE ONE SHOWN BELOW, THE URL SHOULD BE VISIBLE**
+
+![](images/lab3-2.png)
 
 ## Review
 
