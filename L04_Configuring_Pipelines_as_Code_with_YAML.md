@@ -149,6 +149,10 @@ Now you should be able to:
 
 ![](images/lab4-4.png)
 
+### Exercise 2 : delete azure resources
+
+1. Go to the Azure Portal, open your Resource Group and delete App Service Plan and App Service (keep Resource Group).
+
 ## Review
 
 In this lab, you configured CI/CD pipelines as code with YAML in Azure DevOps.
