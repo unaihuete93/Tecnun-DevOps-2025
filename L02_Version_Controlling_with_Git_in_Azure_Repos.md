@@ -101,9 +101,9 @@ You can manage in your Azure DevOps Git repo from the **Branches** view of **Azu
 
 Committing changes to a branch will not affect other branches and you can share branches with others without having to merge the changes into the main project. You can also create new branches to isolate changes for a feature or a bug fix from your main branch and other work. Since the branches are lightweight, switching between branches is quick and easy. Git does not create multiple copies of your source when working with branches, but rather uses the history information stored in commits to recreate the files on a branch when you start working on it. Your Git workflow should create and use branches for managing features and bugfixes. The rest of the Git workflow, such as sharing code and reviewing code with pull requests, all work through branches. Isolating work in branches makes it very simple to change what you are working on by simply changing your current branch.
 
-#### Task : Create a new branch in your local repository
+#### Task : Create a new branch in Azure Repos (Server)
 
-In this task, you will create a branch by using Visual Studio Code.
+In this task, you will create a branch directly in Azure Repos.
 
 1. From your Azure DevOps project, go to **Repos>Branches**.
 
