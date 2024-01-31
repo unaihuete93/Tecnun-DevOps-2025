@@ -144,7 +144,7 @@ The default build pipeline definition doesn't enable Continuous Integration.
 
 #### Task 3: Test the CI pipeline
 
-In this task, you will create a Pull Request, using a new branch to merge a change into the protected **main** branch and automatically trigger the CI pipeline.
+In this task, you will create a commit into the **main** branch and automatically trigger the CI pipeline.
 
 1. Navigate to the **Repos>Files** section.
 4. On the **main** branch, navigate to the **/eShopOnWeb/src/Web/Program.cs** file and click **Edit** in the top-right
@@ -153,7 +153,7 @@ In this task, you will create a Pull Request, using a new branch to merge a chan
     ```csharp
     // Testing my PR
     ```
-
+1. Commit (leave defaults, make sure it uses main branch).
 13. Go back to **Pipelines>Pipelines**, you will notice that the build **eshoponweb-ci** was triggered automatically after the code was merged.
 14. Click on the **eshoponweb-ci** build then select the last run.
 15. Wait until the pipeline runs succesfully, review all results given:
