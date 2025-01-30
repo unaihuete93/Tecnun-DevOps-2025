@@ -56,12 +56,15 @@ In this task, you will add continuous delivery  pipeline, which:
 
     1. In Variables:
         - Resource group - replace NAME
-        - subscriptionid - replace to d2e3bef4-3e21-4c1f-873d-398932f57163
+        - subscriptionid - replace to 1c6b3062-b7a3-4150-b79f-e4197874f94a
         - webappname - replace NAME
 
-2. Click on **Save>Save**. Check if the pipeline started to execute, **Run** pipeline if it did not. Wait for the pipeline to execute. 
+2. Click on **Save>Save**.
+3. Same as you did before, rename the pipeline to **eshoponweb-cd-webapp**. 
+4. Check if the pipeline started to execute, **Run** pipeline if it did not. Wait for the pipeline to execute.
+   
 
-1. You will see **Publish Website** task failing. We usually need to leave some delay between the resource creation and the publishing of the code. Lets use this opportunity to include some control on the execution of the pipeline.
+1. You may see **Publish Website** task failing. We usually need to leave some delay between the resource creation and the publishing of the code. Lets use this opportunity to include some control on the execution of the pipeline.
 
 #### Task 3: Use pipeline environments for approvals
 
@@ -145,7 +148,7 @@ Now you should be able to:
 1. Click on **Commit>Commit**. 
 1. First the CI Pipeline will be executed to validate the code, then the CD Pipeline will start deploying those changes. You will need to approve before publishing stage.
 
-**CALL THE TEACHER TO REVIEW THE SUCCESFUL EXECUTION**
+**CALL THE TEACHER TO REVIEW THE EXECUTION**
 
 ![](images/lab4-4.png)
 
