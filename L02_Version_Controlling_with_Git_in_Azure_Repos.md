@@ -163,9 +163,7 @@ In this task, you will use the Azure DevOps portal to create a Pull Request, usi
     ```
 
 5. Click on **Commit > Commit**, and add the following comment **My first PR test #WORKITEMID** (replace WORKITEMID it by the work item identifier used in the lab, example, #3). This time the commit works, **feature/x** branch has no policies.
-6. A message will pop-up, proposing to create a Pull Request (as you **featue/x** branch is now ahead in changes, compared to **main**). Click on **Create a Pull Request**.
-
-    ![Create a Pull Request](images/create-pr.png)
+6. A message will pop-up, proposing to create a Pull Request (as you **feature/x** branch is now ahead in changes, compared to **main**). Click on **Create a Pull Request**.
 
 7. In the **New pull request** tab, leave defaults and click on **Create**.
 8. The Pull Request will show some failed/pending requirements, based on the policies applied to our target **main** branch.
