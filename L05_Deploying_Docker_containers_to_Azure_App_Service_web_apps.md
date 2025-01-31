@@ -87,7 +87,7 @@ In this task, you will import and run the CD pipeline.
 5. Select **Existing Azure Pipelines YAML File**
 6. Select the **/.ado/eshoponweb-cd-webapp-docker.yml** file then click on **Continue**
 7. In the YAML pipeline definition, customize:
-   -- **YOUR-SUBSCRIPTION-ID** with your Azure subscription ID : d2e3bef4-3e21-4c1f-873d-398932f57163
+   -- **YOUR-SUBSCRIPTION-ID** with your Azure subscription ID : 1c6b3062-b7a3-4150-b79f-e4197874f94a
    - **rg-az400-container-NAME** replace with the resource group created on previous lab **AZ400-EWebShop-NAME** (replace NAME)
    - **azureServiceConnection** to **azure subs**.
 
